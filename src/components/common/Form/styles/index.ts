@@ -10,15 +10,16 @@ export const styles = StyleSheet.create({
   },
   buttonContainer: {
     width: '40%',
+    alignSelf: 'center',
     marginVertical: FONT_SIZE_XL,
-    alignSelf: 'center'
   },
   buttonStyle: {
-    backgroundColor: PRIMARY
+    marginTop: '10%',
+    backgroundColor: PRIMARY,
   },
   buttonTitleStyle: {
-    fontSize: FONT_SIZE_L,
     color: BLACK,
-    fontWeight: '600'
+    fontWeight: '600',
+    fontSize: FONT_SIZE_L,
   }
 })

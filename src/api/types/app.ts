@@ -15,4 +15,13 @@ export namespace DataResponse {
     Email: string
     Password: string
   }
+
+  export interface LoginResults {
+    error: string | undefined;
+    data:  Data;
+  }
+  
+  export interface Data {
+    token: string;
+  }
 }
