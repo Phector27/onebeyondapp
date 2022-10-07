@@ -1,14 +1,14 @@
 import React from 'react'
 import { StatusBar } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
-import MainNavigator from '../navigators/MainNavigator'
+import HomeScreen from './screens/HomeScreen/HomeScreen'
 
 const App = () => {
 
   return (
     <NavigationContainer>
       <StatusBar translucent backgroundColor="transparent" barStyle={'light-content'} />
-      <MainNavigator />
+      <HomeScreen />
     </NavigationContainer>
   )
 }

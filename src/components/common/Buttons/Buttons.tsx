@@ -1,6 +1,6 @@
 import React from 'react'
-import { Text, View, TouchableOpacity, TouchableOpacityProps } from 'react-native'
-import { PRIMARY } from '../../../utils/constants'
+import { Text, View, TouchableOpacity, TouchableOpacityProps, ActivityIndicator } from 'react-native'
+import { BLACK, PRIMARY } from '../../../utils/constants'
 import { styles } from './styles'
 
 export enum UButtonType {
@@ -13,9 +13,10 @@ interface iUButton extends TouchableOpacityProps {
   onPress?: () => void
   text: string
   type?: UButtonType
+  isLoading?: boolean
 }
 
-const UButton: React.FunctionComponent<iUButton> = ({ onPress, text, type = UButtonType.DEFAULT, ...rest }) => {
+const UButton: React.FunctionComponent<iUButton> = ({ onPress, text, type = UButtonType.DEFAULT, isLoading, ...rest }) => {
   const style = rest.style
 
   return (
@@ -25,7 +26,9 @@ const UButton: React.FunctionComponent<iUButton> = ({ onPress, text, type = UBut
       activeOpacity={0.2}>
       <View
         style={styles(type, PRIMARY).buttonContainer}>
-        <Text style={styles(type).text}>{text}</Text>
+        {isLoading
+          ? <ActivityIndicator color={BLACK} />
+          : <Text style={styles(type).text}>{text}</Text>}
       </View>
     </TouchableOpacity>
   )

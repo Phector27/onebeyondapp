@@ -11,9 +11,9 @@ export const appReducer: Reducer<AppState, AppActions> = (
       return produce(state, (copyState: AppState) => {
         copyState.inputData = action.data
       })
-    case AppActionTypes.SET_SUBMISSIONS_DATA:
+    case AppActionTypes.SET_LOGIN_DATA_SUCCESS:
       return produce(state, (copyState: AppState) => {
-        copyState.submissions = [...copyState.submissions, action.data]
+        copyState.data = action.data
       })
   }
   return state

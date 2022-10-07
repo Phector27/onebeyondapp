@@ -7,4 +7,4 @@ export const FONT_SIZE_SM = 14
 export const FONT_SIZE_M = 16
 export const FONT_SIZE_L = 18
 export const FONT_SIZE_XL = 20
-
+export const URL = 'https://www.one-beyond.com/'

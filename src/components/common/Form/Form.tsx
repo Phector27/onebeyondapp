@@ -1,23 +1,22 @@
 import React, { useEffect, useState } from "react"
-import { Alert, ScrollView } from 'react-native'
+import { Linking, View } from 'react-native'
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigation } from "@react-navigation/native"
-import { Button, Input } from "react-native-elements"
-import {
-  getInputDataDispatchAction,
-  setSubmissionsDataDispatchAction
-} from '../../../store/app/dispatchers'
+import { getInputDataDispatchAction, setLoginDataDispatchAction } from '../../../store/app/dispatchers'
 import { DefaultState } from "../../../store/index"
-import { DataResponse } from "../../../api/types/app"
+import { DataResponse } from '../../../api/types/app'
+import { URL } from "../../../utils/constants"
 import { IFormData } from "./Interfaces"
 import { INavigation } from './Interfaces/index'
 import Loader from "../Loader/Loader"
+import UButton, { UButtonType } from "../Buttons/Buttons"
+import TextInput, { TextInputType } from "../TextInput/TextInput"
 import { styles } from "./styles"
-import TextInput from "../TextInput/TextInput"
-import { TextInputType } from '../TextInput/TextInput';
 
 const Form: React.FunctionComponent = () => {
-  const [userData, setUserData] = useState<IFormData | undefined>(undefined)
+  const [userData, setUserData] = useState<IFormData | any>(undefined)
+  const [buttonLoading, setButtonLoading] = useState<boolean>(false)
+
   const inputData = useSelector<DefaultState, DataResponse.InputField[]>(state => state.app.inputData)
 
   const navigation: INavigation = useNavigation()
@@ -35,28 +34,11 @@ const Form: React.FunctionComponent = () => {
     })
   }
 
-  const getInputs = inputData.map((input) => {
-    return (
-      <Input
-        key={input.id}
-        label={input.label}
-        autoCompleteType={null}
-        maxLength={input.maxLength}
-        inputStyle={styles.inputStyle}
-        placeholder={input.placeholder}
-        value={userData ? userData[input.label] : ""}
-        onChangeText={(text) => handleTextChange(text, input.label)}
-        keyboardType={input.type === "number" ? "numeric" : "default"}
-      />
-    )}
-  )
-
   const getTextImputs = inputData.map((input) => {
     return (
       <TextInput
         key={input.id}
         label={input.label}
-        autoCorrect={false}
         autoCapitalize="none"
         maxLength={input.maxLength}
         keyboardAppearance="default"
@@ -71,30 +53,30 @@ const Form: React.FunctionComponent = () => {
   })
 
   const handleSubmit = () => {
+    setButtonLoading(true)
     if (userData) {
-      Alert.alert("Submit", "Are you sure?", [
-        { text: "Cancel", style: "cancel" },
-        {
-          text: "OK", onPress: () => {
-            dispatch(setSubmissionsDataDispatchAction(userData as DataResponse.Sumbmission))
-            setUserData(undefined)
-            navigation.navigate("Subs")
-          }},
-      ])
-    } else Alert.alert("Please, fill at least one field")
+      dispatch(setLoginDataDispatchAction(userData))
+    }
+    setTimeout(() => {
+      setButtonLoading(false)
+    }, 2000)
   }
 
   return inputData.length ?
-    <ScrollView contentContainerStyle={styles.container}>
+    <View style={styles.container}>
       {getTextImputs}
-      <Button
-        buttonStyle={styles.buttonStyle}
-        titleStyle={styles.buttonTitleStyle}
-        containerStyle={styles.buttonContainer}
+      <UButton
+        text="Log In"
         onPress={handleSubmit}
-        title='Submit'
+        style={styles.buttonStyle}
+        isLoading={buttonLoading}
       />
-    </ScrollView>
+      <UButton
+        text="Forgot your password?"
+        onPress={() => Linking.openURL(URL)}
+        type={UButtonType.CLEAR}
+      />
+    </View>
     : <Loader />
 }
 

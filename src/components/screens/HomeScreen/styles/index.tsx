@@ -1,15 +1,17 @@
 import { StyleSheet, Platform } from "react-native"
+import { BLACK } from '../../../../utils/constants'
 
 export const styles = (isKeyboardVisible?: boolean) => StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: '10%',
+    paddingTop: '20%',
     paddingHorizontal: '5%',
-    backgroundColor: '#000000',
     justifyContent: 'center',
+    backgroundColor: BLACK,
   },
   logo: {
     width: '100%',
-    backgroundColor: '#000000',
+    marginBottom: '10%',
+    backgroundColor: BLACK,
   }
 })
