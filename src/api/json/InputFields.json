@@ -1,0 +1,18 @@
+{
+  "inputFields": [
+    {
+      "id": "email",
+      "label": "Email",
+      "placeholder": "Enter your email",
+      "type": "text",
+      "maxLength": 255
+    },
+    {
+      "id": "password",
+      "label": "Password",
+      "placeholder": "Enter your password",
+      "type": "password",
+      "maxLength": 255
+    }
+  ]
+}
