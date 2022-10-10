@@ -11,7 +11,7 @@ export const styles = (isKeyboardVisible?: boolean) => StyleSheet.create({
   },
   logo: {
     width: '100%',
-    marginBottom: '10%',
+    marginBottom: '2%',
     backgroundColor: BLACK,
   }
 })

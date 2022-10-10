@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
     marginVertical: FONT_SIZE_XL,
   },
   buttonStyle: {
-    marginTop: '10%',
+    marginTop: '15%',
     backgroundColor: PRIMARY,
   },
   buttonTitleStyle: {

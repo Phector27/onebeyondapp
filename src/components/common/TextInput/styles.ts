@@ -7,7 +7,7 @@ export const styles = (length?: number) => StyleSheet.create({
   },
   inputStyle: {
     height: 62,
-    width: '90%',
+    width: '85%',
     color: WHITE,
     borderRadius: 10,
     marginVertical: 10,
