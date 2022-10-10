@@ -1,10 +1,10 @@
 import { all, call, put, takeLatest } from '@redux-saga/core/effects'
-import { IGetInputDataAction, IGetPhonesAction, ISetLoginDataAction, IGetPhoneDetailsAction, ISetRegisterDataAction } from './actions';
+import { IGetInputDataAction, IGetPhonesAction, ISetLoginDataAction, IGetPhoneDetailsAction, ISetRegisterDataAction, IDeletePhoneAction } from './actions';
 import { AppActions, AppActionTypes } from './types'
-import { getInputDataDispatchActionSuccess, setLoginDataDispatchActionSuccess, setLoginDataDispatchActionError, getInputDataDispatchActionError, getPhonesDispatchActionSuccess, getPhonesDispatchActionError, getPhoneDetailsDispatchActionSuccess, getPhoneDetailsDispatchActionError, setRegisterDataDispatchAction, setRegisterDataDispatchActionSuccess } from './dispatchers';
+import { getInputDataDispatchActionSuccess, setLoginDataDispatchActionSuccess, setLoginDataDispatchActionError, getInputDataDispatchActionError, getPhonesDispatchActionSuccess, getPhonesDispatchActionError, getPhoneDetailsDispatchActionSuccess, getPhoneDetailsDispatchActionError, setRegisterDataDispatchAction, setRegisterDataDispatchActionSuccess, deletePhoneDispatchActionSuccess, deletePhoneDispatchActionError } from './dispatchers';
 import { DataResponse } from '../../api/types/app';
 import customData from '../../api/json/InputFields.json'
-import { URL_LOGIN, URL_GET_PHONES, URL_GET_PHONE_DETAILS, URL_REGISTER } from '../../utils/constants';
+import { URL_LOGIN, URL_GET_PHONES, URL_GET_PHONE_DETAILS, URL_REGISTER, URL_REMOVE_PHONE } from '../../utils/constants';
 
 /** Initial Saga **/
 export function* appSaga() {
@@ -13,7 +13,8 @@ export function* appSaga() {
     takeLatest(AppActionTypes.SET_LOGIN_DATA, getLoginData),
     takeLatest(AppActionTypes.GET_PHONES, getPhones),
     takeLatest(AppActionTypes.GET_PHONE_DETAILS, getPhoneDetails),
-    takeLatest(AppActionTypes.SET_REGISTER_DATA, getRegisterData)
+    takeLatest(AppActionTypes.SET_REGISTER_DATA, getRegisterData),
+    takeLatest(AppActionTypes.DELETE_PHONE, getDeletePhone),
   ])
 }
 
@@ -126,5 +127,27 @@ function* getRegisterData(action: ISetRegisterDataAction) {
   } catch (error: any) {
     console.log('Get Login Data Error: ', error)
     yield put<AppActions>(setLoginDataDispatchActionError(error))
+  }
+}
+
+function* getDeletePhone(action: IDeletePhoneAction) {
+  try {
+    let responseData: DataResponse.DeletePhoneResults = yield call(
+      () => fetch(`${URL_REMOVE_PHONE}/${action.id}`, {
+        method: 'DELETE',
+        headers: {
+          'auth-token': action.token
+        },
+      })
+        .then(response => response.json())
+        .then(result => responseData = result)
+        .catch(error => console.log('error', error))
+    )
+
+    yield put<AppActions>(deletePhoneDispatchActionSuccess(responseData.message, responseData.id))
+
+  } catch (error: any) {
+    console.log('Delete Phone Error: ', error)
+    yield put<AppActions>(deletePhoneDispatchActionError(error))
   }
 }

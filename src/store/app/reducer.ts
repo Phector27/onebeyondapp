@@ -40,6 +40,16 @@ export const appReducer: Reducer<AppState, AppActions> = (
         copyState.data = undefined
         copyState.registerData = undefined
       })
+    case AppActionTypes.SET_IS_ADMIN_USER:
+      return produce(state, (copyState: AppState) => {
+        copyState.isAdminUser = action.isAdmin
+      })
+    case AppActionTypes.DELETE_PHONE_SUCCESS:
+      return produce(state, (copyState: AppState) => {
+        copyState.phones = copyState.phones?.filter(
+          (phone) => phone._id !== action.id
+        )
+      })
   }
   return state
 }

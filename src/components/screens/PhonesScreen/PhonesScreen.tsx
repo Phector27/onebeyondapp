@@ -1,17 +1,20 @@
-import { View, Text, AsyncStorage, ActivityIndicator, ScrollView, FlatList, Image, TouchableOpacity, BackHandler } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import { getData, removeData } from '../../../utils/AsyncStorage';
-import { useDispatch, useSelector } from 'react-redux'
-import { DefaultState } from '../../../store/index';
-import { getPhonesDispatchAction } from '../../../store/app/dispatchers';
-import { DataResponse } from '../../../api/types/app';
-import { BLACK, WHITE } from '../../../utils/constants';
-import Loader from '../../common/Loader/Loader';
-import { IPhonesScreen } from './Interfaces/index';
+import React, { useEffect, useState } from "react"
+import { View, FlatList, BackHandler, Pressable, Text, TouchableOpacity } from "react-native"
+import { useDispatch, useSelector } from "react-redux"
+import RNRestart from 'react-native-restart'
+import { DataResponse } from "../../../api/types/app"
+import { DefaultState } from "../../../store/index"
+import { getPhonesDispatchAction } from "../../../store/app/dispatchers"
+import { removeAllData, removeData } from "../../../utils/AsyncStorage"
+import { IPhonesScreen } from "./Interfaces/index"
+import Loader from "../../common/Loader/Loader"
+import PhoneCard from "../../common/PhoneCard/PhoneCard"
+import { styles } from "./styles"
+import { WHITE } from '../../../utils/constants';
 
 const PhonesScreen: React.FunctionComponent<IPhonesScreen> = ({ navigation }) => {
   const [loading, setLoading] = useState<boolean>(true)
-  const token = useSelector<DefaultState, string>(state => state.app.token!)
+  const token = useSelector<DefaultState, string>((state) => state.app.token!)
   const phonesList = useSelector<DefaultState, DataResponse.PhoneResults[]>(state => state.app.phones)
 
   const dispatch = useDispatch()
@@ -26,41 +29,35 @@ const PhonesScreen: React.FunctionComponent<IPhonesScreen> = ({ navigation }) =>
     }
   }, [phonesList])
 
-  // useEffect(() => {
-  //   removeData('token')
-  // }, [])
+  const handleLogOut = () => {
+    removeAllData()
+    setTimeout(() => {
+      RNRestart.Restart()
+    }, 500);
+  }
 
   useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', () => {
-      removeData('token')
-      navigation.navigate('LoginScreen')
+    BackHandler.addEventListener("hardwareBackPress", () => {
+      handleLogOut()
       return true
     })
   }, [])
 
-  return ( !loading ?
-    <View style={{ flex: 1, backgroundColor: BLACK, paddingTop: '20%' }}>
+  return !loading ? (
+    <View style={styles.container}>
+      <TouchableOpacity onPress={handleLogOut} style={styles.logOutButton}>
+        <Text style={styles.logOutText}>Log Out</Text>
+      </TouchableOpacity>
       <FlatList
         data={phonesList}
         renderItem={({ item }) => (
-          <TouchableOpacity
-            style={{ flex: 1, flexDirection: 'row', margin: 10, backgroundColor: WHITE, borderRadius: 10, padding: 10 }}
-            onPress={() => navigation.navigate('PhoneDetails', { id: item._id })}>
-            <Image
-              style={{ width: 100, height: 100 }}
-              source={{ uri: item.imageFileName }}
-              resizeMode="contain"
-            />
-            <View style={{ flex: 1, flexDirection: 'column', marginLeft: 10 }}>
-              <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{item.name}</Text>
-              <Text style={{ fontSize: 15, fontWeight: 'bold' }}>{item.price} $</Text>
-              <Text style={{alignSelf: 'flex-end', marginTop: 20}}>Press for more info</Text>
-            </View>
-          </TouchableOpacity>
+          <PhoneCard item={item} navigation={navigation} />
         )}
-        keyExtractor={item => item._id}
+        keyExtractor={(item) => item._id}
       />
-    </View> : <Loader />
+    </View>
+  ) : (
+    <Loader />
   )
 }
 

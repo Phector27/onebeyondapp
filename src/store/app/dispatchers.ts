@@ -17,10 +17,11 @@ import {
   IGetPhoneDetailsAction,
   IGetPhoneDetailsActionSuccess,
   IGetPhoneDetailsActionError,
-  ISetRegisterDataActionError
+  ISetRegisterDataActionError,
+  ISetIsAdminUserAction
 } from './actions'
 import { AppActionTypes } from './types'
-import { ICleanResponseAction } from './actions';
+import { ICleanResponseAction, IDeletePhoneAction, IDeletePhoneActionSuccess, IDeletePhoneActionError } from './actions';
 
 /** Actions desde la vista */
 export const getInputDataDispatchAction = (): IGetInputDataAction => ({
@@ -64,6 +65,17 @@ export const setRegisterDataDispatchAction = (data: DataResponse.Sumbmission): I
 
 export const cleanResponseDispatchAction = (): ICleanResponseAction => ({
   type: AppActionTypes.CLEAN_RESPONSE
+})
+
+export const setIsAdminUserDispatchAction = (isAdmin: boolean | string): ISetIsAdminUserAction => ({
+  type: AppActionTypes.SET_IS_ADMIN_USER,
+  isAdmin
+})
+
+export const deletePhoneDispatchAction = (id: string, token: string): IDeletePhoneAction => ({
+  type: AppActionTypes.DELETE_PHONE,
+  id,
+  token
 })
 
 /** Saga Actions desde sagas */
@@ -114,5 +126,16 @@ export const setRegisterDataDispatchActionSuccess = (data: DataResponse.Register
 
 export const setRegisterDataDispatchActionError = (error: string): ISetRegisterDataActionError => ({
   type: AppActionTypes.SET_REGISTER_DATA_ERROR,
+  error
+})
+
+export const deletePhoneDispatchActionSuccess = (message: string, id: string): IDeletePhoneActionSuccess => ({
+  type: AppActionTypes.DELETE_PHONE_SUCCESS,
+  message,
+  id
+})
+
+export const deletePhoneDispatchActionError = (error: string): IDeletePhoneActionError => ({
+  type: AppActionTypes.DELETE_PHONE_ERROR,
   error
 })

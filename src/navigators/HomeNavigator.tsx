@@ -16,7 +16,7 @@ const HomeNavigator = () => {
         contentStyle: { backgroundColor: BLACK }
        }}>
       <Stack.Screen name="PhonesScreen" component={PhonesScreen} />
-      <Stack.Screen name="PhoneDetails" component={PhoneDetailsScreen} />
+      <Stack.Screen name="PhoneDetailsScreen" component={PhoneDetailsScreen} />
       <Stack.Screen name="LoginScreen" component={LoginScreen} />
     </Stack.Navigator>
   )

@@ -20,6 +20,7 @@ export namespace DataResponse {
   export interface LoginResults {
     error: string | undefined
     data: Data
+    isAdmin: boolean
   }
 
   export interface Data {
@@ -44,7 +45,8 @@ export namespace DataResponse {
 
   export interface RegisterResults {
     error: null
-    data:  RegisterData
+    data: RegisterData
+    message?: string
   }
   
   export interface RegisterData {
@@ -53,5 +55,10 @@ export namespace DataResponse {
     password: string
     _id: string
     date: string
+  }
+
+  export interface DeletePhoneResults {
+    message: string
+    id: string
   }
 }
