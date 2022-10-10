@@ -8,7 +8,7 @@ import CustomAlert from "../../common/Alert/Alert"
 import { styles } from "./styles"
 import { IHomeScreen } from './Interfaces/index';
 import { storeData } from "../../../utils/AsyncStorage"
-import { setTokenDispatchAction, cleanResponseDispatchAction } from '../../../store/app/dispatchers';
+import { setTokenDispatchAction, cleanResponseDispatchAction, setIsAdminUserDispatchAction } from '../../../store/app/dispatchers';
 import { WELCOME_ACCESS } from '../../../utils/constants';
 
 const HomeScreen: React.FunctionComponent<IHomeScreen> = ({ navigation }) => {
@@ -30,13 +30,19 @@ const HomeScreen: React.FunctionComponent<IHomeScreen> = ({ navigation }) => {
 
   const loginResponse = useSelector<DefaultState, DataResponse.LoginResults>(state => state.app.data!)
   const registerResponse = useSelector<DefaultState, DataResponse.RegisterResults>(state => state.app.registerData!)
+  
+  const handleLogin = () => {
+    navigation.navigate('PhonesScreen', { token: loginResponse?.data.token })
+    storeData('token', loginResponse?.data.token)
+    storeData('isAdmin', `${loginResponse?.isAdmin}`)
+    dispatch(setIsAdminUserDispatchAction(loginResponse?.isAdmin))
+    dispatch(setTokenDispatchAction(loginResponse?.data.token))
+  }
 
   useEffect(() => {
     if (loginResponse !== undefined) {
       if (loginResponse?.error === null && loginResponse?.data.token) {
-        navigation.navigate('PhonesScreen', { token: loginResponse?.data.token })
-        storeData('token', loginResponse?.data.token)
-        dispatch(setTokenDispatchAction(loginResponse?.data.token))
+        handleLogin()
       } else {
         setIsAlertVisible(true)
       }
@@ -86,7 +92,7 @@ const HomeScreen: React.FunctionComponent<IHomeScreen> = ({ navigation }) => {
               isRegister
                 ? registerResponse?.data
                   ? WELCOME_ACCESS
-                  : registerResponse?.error ?? ''
+                  : registerResponse?.error ?? registerResponse?.message ?? 'Error'
                 : loginResponse?.error ?? ''
             }
             closeAlert={handleCloseAlert} />

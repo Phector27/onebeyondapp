@@ -45,6 +45,16 @@ export interface ICleanResponseAction {
   type: typeof AppActionTypes.CLEAN_RESPONSE
 }
 
+export interface ISetIsAdminUserAction {
+  type: typeof AppActionTypes.SET_IS_ADMIN_USER
+  isAdmin: boolean | string
+}
+
+export interface IDeletePhoneAction {
+  type: typeof AppActionTypes.DELETE_PHONE
+  id: string
+  token: string
+}
 
 /** Actions **/
 export interface IGetInputDataActionSuccess {
@@ -94,5 +104,16 @@ export interface ISetRegisterDataActionSuccess {
 
 export interface ISetRegisterDataActionError {
   type: typeof AppActionTypes.SET_REGISTER_DATA_ERROR
+  error: string | boolean
+}
+
+export interface IDeletePhoneActionSuccess {
+  type: typeof AppActionTypes.DELETE_PHONE_SUCCESS
+  message: string
+  id: string
+}
+
+export interface IDeletePhoneActionError {
+  type: typeof AppActionTypes.DELETE_PHONE_ERROR
   error: string | boolean
 }

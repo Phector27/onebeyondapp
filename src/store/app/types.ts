@@ -19,7 +19,11 @@ import {
   ISetRegisterDataAction,
   ISetRegisterDataActionSuccess,
   ISetRegisterDataActionError,
-  ICleanResponseAction
+  ICleanResponseAction,
+  ISetIsAdminUserAction,
+  IDeletePhoneAction,
+  IDeletePhoneActionSuccess,
+  IDeletePhoneActionError,
 } from './actions'
 
 /** Action Types * */
@@ -43,6 +47,10 @@ export enum AppActionTypes {
   SET_REGISTER_DATA_SUCCESS = 'APP@@SET_REGISTER_DATA_SUCCESS',
   SET_REGISTER_DATA_ERROR = 'APP@@SET_REGISTER_DATA_ERROR',
   CLEAN_RESPONSE = 'APP@@CLEAN_RESPONSE',
+  SET_IS_ADMIN_USER = 'APP@@SET_IS_ADMIN_USER',
+  DELETE_PHONE = 'APP@@DELETE_PHONE',
+  DELETE_PHONE_SUCCESS = 'APP@@DELETE_PHONE_SUCCESS',
+  DELETE_PHONE_ERROR = 'APP@@DELETE_PHONE_ERROR',
 }
 
 /** Action List **/
@@ -66,6 +74,10 @@ export type AppActions =
   | ISetRegisterDataActionSuccess
   | ISetRegisterDataActionError
   | ICleanResponseAction
+  | ISetIsAdminUserAction
+  | IDeletePhoneAction
+  | IDeletePhoneActionSuccess
+  | IDeletePhoneActionError
 
 /** Default State Values **/
 export const appDefaultState = (): AppState => ({
@@ -76,6 +88,7 @@ export const appDefaultState = (): AppState => ({
   loginDataError: null,
   getPhonesError: null,
   getPhoneDetailsError: null,
+  isAdminUser: false,
 })
 
 /** State **/
@@ -91,4 +104,5 @@ export interface AppState {
   loginDataError: null | string | boolean
   getPhonesError: null | string | boolean 
   getPhoneDetailsError: null | string | boolean
+  isAdminUser: boolean | string
 }

@@ -73,7 +73,6 @@ const Form: React.FunctionComponent<IForm> = ({ handleLoadingSubmit, isLoginLoad
     setIsLogin(false)
   }
 
-
   return inputData.length ?
     <View style={styles.container}>
       {!isLogin &&

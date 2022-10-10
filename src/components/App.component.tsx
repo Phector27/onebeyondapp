@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { NavigationContainer } from '@react-navigation/native'
 import HomeNavigator from '../navigators/HomeNavigator'
 import LoginNavigator from '../navigators/LoginNavigator'
-import { setTokenDispatchAction } from '../store/app/dispatchers'
+import { setTokenDispatchAction, setIsAdminUserDispatchAction } from '../store/app/dispatchers';
 import { getData } from '../utils/AsyncStorage'
 
 const App = () => {
