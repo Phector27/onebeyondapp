@@ -1,19 +1,23 @@
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import HomeScreen from '../components/screens/HomeScreen/HomeScreen'
-import SubsScreen from '../components/screens/SubsScreen/SubsScreen'
+import LoginScreen from '../components/screens/LoginScreen/LoginScreen'
 import PhonesScreen from '../components/screens/PhonesScreen/PhonesScreen'
+import PhoneDetailsScreen from '../components/screens/PhoneDetailsScreen/PhoneDetailsScreen'
+import { BLACK } from '../utils/constants';
 
 const HomeNavigator = () => {
   const Stack = createNativeStackNavigator()
 
   return (
     <Stack.Navigator
-      initialRouteName="HomeScreen"
-      screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="HomeScreen" component={HomeScreen} />
+      initialRouteName="PhonesScreen"
+      screenOptions={{
+        headerShown: false,
+        contentStyle: { backgroundColor: BLACK }
+       }}>
       <Stack.Screen name="PhonesScreen" component={PhonesScreen} />
-      <Stack.Screen name="SubsScreen" component={SubsScreen} />
+      <Stack.Screen name="PhoneDetails" component={PhoneDetailsScreen} />
+      <Stack.Screen name="LoginScreen" component={LoginScreen} />
     </Stack.Navigator>
   )
 }

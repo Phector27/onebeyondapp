@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import { ActivityIndicator, Animated, Text, View } from 'react-native'
 import { bounceLoader } from './utils/BounceLoader'
 import { styles } from './styles'
+import { PRIMARY } from '../../../utils/constants';
 
 const Loader: React.FunctionComponent = () => {
 
@@ -16,9 +17,9 @@ const Loader: React.FunctionComponent = () => {
       style={styles().container}>
       <Animated.View
         style={styles(bounceAnimation).animatedContainer}>
-        <ActivityIndicator size={75} color='#07EB00'/>
+        <ActivityIndicator size={50} color={PRIMARY} />
         <Text style={styles().textStyle}>
-          Loading...
+          Loading
         </Text>
       </Animated.View>
     </View>

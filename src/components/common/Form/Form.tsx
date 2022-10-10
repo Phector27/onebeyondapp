@@ -1,26 +1,29 @@
 import React, { useEffect, useState } from "react"
-import { Linking, View } from 'react-native'
+import { Alert, Linking, View } from 'react-native'
 import { useDispatch, useSelector } from "react-redux"
-import { useNavigation } from "@react-navigation/native"
-import { getInputDataDispatchAction, setLoginDataDispatchAction } from '../../../store/app/dispatchers'
+import { getInputDataDispatchAction, setLoginDataDispatchAction, setRegisterDataDispatchAction } from '../../../store/app/dispatchers';
 import { DefaultState } from "../../../store/index"
 import { DataResponse } from '../../../api/types/app'
 import { URL } from "../../../utils/constants"
-import { IFormData } from "./Interfaces"
-import { INavigation } from './Interfaces/index'
+import { IFormData, INavigation } from "./Interfaces"
 import Loader from "../Loader/Loader"
 import UButton, { UButtonType } from "../Buttons/Buttons"
 import TextInput, { TextInputType } from "../TextInput/TextInput"
 import { styles } from "./styles"
 
-const Form: React.FunctionComponent = () => {
+interface IForm {
+  handleLoadingSubmit: () => void
+  isLoginLoading: boolean
+  navigation: INavigation
+  onHandleRegister: () => void
+}
+
+const Form: React.FunctionComponent<IForm> = ({ handleLoadingSubmit, isLoginLoading, navigation, onHandleRegister }) => {
+  const [isLogin, setIsLogin] = useState<boolean>(true)
   const [userData, setUserData] = useState<IFormData | any>(undefined)
-  const [buttonLoading, setButtonLoading] = useState<boolean>(false)
 
   const inputData = useSelector<DefaultState, DataResponse.InputField[]>(state => state.app.inputData)
 
-  const navigation: INavigation = useNavigation()
-  
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -34,7 +37,7 @@ const Form: React.FunctionComponent = () => {
     })
   }
 
-  const getTextImputs = inputData.map((input) => {
+  const getTextInputs = inputData.map((input) => {
     return (
       <TextInput
         key={input.id}
@@ -52,30 +55,63 @@ const Form: React.FunctionComponent = () => {
     )
   })
 
-  const handleSubmit = () => {
-    setButtonLoading(true)
+  const handleSubmitForm = () => {
     if (userData) {
-      dispatch(setLoginDataDispatchAction(userData))
+      handleLoadingSubmit()
+      if (isLogin) {
+        dispatch(setLoginDataDispatchAction(userData))
+      } else {
+        dispatch(setRegisterDataDispatchAction(userData))
+      }
+    } else {
+      Alert.alert("Please fill all fields")
     }
-    setTimeout(() => {
-      setButtonLoading(false)
-    }, 2000)
   }
+
+  const handleRegister = () => {
+    onHandleRegister()
+    setIsLogin(false)
+  }
+
 
   return inputData.length ?
     <View style={styles.container}>
-      {getTextImputs}
+      {!isLogin &&
+        <TextInput
+          label="Name"
+          length={userData ? userData['Name']?.length : 0}
+          onChangeText={(text) => handleTextChange(text, "Name")}
+          value={userData ? userData['Name'] : ""}
+          placeholder="Name"
+        />
+      }
+      {getTextInputs}
       <UButton
-        text="Log In"
-        onPress={handleSubmit}
+        text={isLogin ? "Log In" : "Register"}
+        onPress={handleSubmitForm}
         style={styles.buttonStyle}
-        isLoading={buttonLoading}
+        isLoading={isLoginLoading}
       />
-      <UButton
-        text="Forgot your password?"
-        onPress={() => Linking.openURL(URL)}
-        type={UButtonType.CLEAR}
-      />
+      {isLogin ?
+        <>
+          <UButton
+            text="Forgot your password?"
+            onPress={() => Linking.openURL(URL)}
+            type={UButtonType.CLEAR}
+          />
+          <UButton
+            text="Sign Up 💛"
+            onPress={handleRegister}
+            type={UButtonType.CLEAR}
+          />
+        </>  
+        :
+        <UButton text="Log In 🔑"
+          onPress={() => setIsLogin(true)}
+          type={UButtonType.CLEAR}
+          style={{marginVertical: '5%'}}
+        />
+      }
     </View>
     : <Loader />
 }
