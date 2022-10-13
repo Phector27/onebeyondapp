@@ -47,13 +47,30 @@ export interface ICleanResponseAction {
 
 export interface ISetIsAdminUserAction {
   type: typeof AppActionTypes.SET_IS_ADMIN_USER
-  isAdmin: boolean | string
+  isAdmin: boolean
 }
 
 export interface IDeletePhoneAction {
   type: typeof AppActionTypes.DELETE_PHONE
   id: string
   token: string
+}
+
+export interface IEditPhoneAction {
+  type: typeof AppActionTypes.EDIT_PHONE
+  token: string
+  data: DataResponse.EditResults
+  id: string
+}
+
+export interface ICleanPhonesListAction {
+  type: typeof AppActionTypes.CLEAN_PHONES_LIST
+}
+
+export interface IAddNewPhoneAction {
+  type: typeof AppActionTypes.ADD_NEW_PHONE
+  token: string
+  data: DataResponse.AddPhoneRequest
 }
 
 /** Actions **/
@@ -116,4 +133,24 @@ export interface IDeletePhoneActionSuccess {
 export interface IDeletePhoneActionError {
   type: typeof AppActionTypes.DELETE_PHONE_ERROR
   error: string | boolean
+}
+
+export interface IEditPhoneActionSuccess {
+  type: typeof AppActionTypes.EDIT_PHONE_SUCCESS
+  data: DataResponse.EditResults
+}
+
+export interface IEditPhoneActionError {
+  type: typeof AppActionTypes.EDIT_PHONE_ERROR
+  message: string
+}
+
+export interface IAddNewPhoneActionSuccess {
+  type: typeof AppActionTypes.ADD_NEW_PHONE_SUCCESS
+  data: DataResponse.AddNewPhoneResult
+}
+
+export interface IAddNewPhoneActionError {
+  type: typeof AppActionTypes.ADD_NEW_PHONE_ERROR
+  message: string
 }

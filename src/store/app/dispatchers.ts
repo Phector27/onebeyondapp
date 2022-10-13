@@ -21,7 +21,7 @@ import {
   ISetIsAdminUserAction
 } from './actions'
 import { AppActionTypes } from './types'
-import { ICleanResponseAction, IDeletePhoneAction, IDeletePhoneActionSuccess, IDeletePhoneActionError } from './actions';
+import { ICleanResponseAction, IDeletePhoneAction, IDeletePhoneActionSuccess, IDeletePhoneActionError, IEditPhoneAction, IEditPhoneActionSuccess, IEditPhoneActionError, ICleanPhonesListAction, IAddNewPhoneAction, IAddNewPhoneActionSuccess, IAddNewPhoneActionError } from './actions';
 
 /** Actions desde la vista */
 export const getInputDataDispatchAction = (): IGetInputDataAction => ({
@@ -67,7 +67,7 @@ export const cleanResponseDispatchAction = (): ICleanResponseAction => ({
   type: AppActionTypes.CLEAN_RESPONSE
 })
 
-export const setIsAdminUserDispatchAction = (isAdmin: boolean | string): ISetIsAdminUserAction => ({
+export const setIsAdminUserDispatchAction = (isAdmin: boolean): ISetIsAdminUserAction => ({
   type: AppActionTypes.SET_IS_ADMIN_USER,
   isAdmin
 })
@@ -76,6 +76,23 @@ export const deletePhoneDispatchAction = (id: string, token: string): IDeletePho
   type: AppActionTypes.DELETE_PHONE,
   id,
   token
+})
+
+export const editPhoneDispatchAction = (token: string, data: DataResponse.EditResults, id: string): IEditPhoneAction => ({
+  type: AppActionTypes.EDIT_PHONE,
+  token,
+  data,
+  id
+})
+
+export const cleanPhonesListDispatchAction = (): ICleanPhonesListAction => ({
+  type: AppActionTypes.CLEAN_PHONES_LIST
+})
+
+export const addPhoneDispatchAction = (token: string, data: DataResponse.AddPhoneRequest): IAddNewPhoneAction => ({
+  type: AppActionTypes.ADD_NEW_PHONE,
+  token,
+  data
 })
 
 /** Saga Actions desde sagas */
@@ -138,4 +155,24 @@ export const deletePhoneDispatchActionSuccess = (message: string, id: string): I
 export const deletePhoneDispatchActionError = (error: string): IDeletePhoneActionError => ({
   type: AppActionTypes.DELETE_PHONE_ERROR,
   error
+})
+
+export const editPhoneDispatchActionSuccess = (data: DataResponse.EditResults): IEditPhoneActionSuccess => ({
+  type: AppActionTypes.EDIT_PHONE_SUCCESS,
+  data
+})
+
+export const editPhoneDispatchActionError = (message: string): IEditPhoneActionError => ({
+  type: AppActionTypes.EDIT_PHONE_ERROR,
+  message
+})
+
+export const addPhoneDispatchActionSuccess = (data: DataResponse.AddNewPhoneResult): IAddNewPhoneActionSuccess => ({
+  type: AppActionTypes.ADD_NEW_PHONE_SUCCESS,
+  data
+})
+
+export const addPhoneDispatchActionError = (message: string): IAddNewPhoneActionError => ({
+  type: AppActionTypes.ADD_NEW_PHONE_ERROR,
+  message
 })

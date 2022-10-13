@@ -50,6 +50,20 @@ export const appReducer: Reducer<AppState, AppActions> = (
           (phone) => phone._id !== action.id
         )
       })
+    case AppActionTypes.EDIT_PHONE_SUCCESS:
+      return produce(state, (copyState: AppState) => {
+        copyState.phones = copyState.phones?.map((phone) =>
+          phone._id === action.data._id ? action.data : phone
+        )
+      })
+    case AppActionTypes.CLEAN_PHONES_LIST:
+      return produce(state, (copyState: AppState) => {
+        copyState.phones = []
+      })
+    case AppActionTypes.ADD_NEW_PHONE_SUCCESS:
+      return produce(state, (copyState: AppState) => {
+        copyState.phones = copyState.phones?.concat(action.data)
+      })
   }
   return state
 }

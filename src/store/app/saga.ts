@@ -1,10 +1,10 @@
 import { all, call, put, takeLatest } from '@redux-saga/core/effects'
-import { IGetInputDataAction, IGetPhonesAction, ISetLoginDataAction, IGetPhoneDetailsAction, ISetRegisterDataAction, IDeletePhoneAction } from './actions';
+import { IGetInputDataAction, IGetPhonesAction, ISetLoginDataAction, IGetPhoneDetailsAction, ISetRegisterDataAction, IDeletePhoneAction, IEditPhoneAction, IAddNewPhoneAction } from './actions';
 import { AppActions, AppActionTypes } from './types'
-import { getInputDataDispatchActionSuccess, setLoginDataDispatchActionSuccess, setLoginDataDispatchActionError, getInputDataDispatchActionError, getPhonesDispatchActionSuccess, getPhonesDispatchActionError, getPhoneDetailsDispatchActionSuccess, getPhoneDetailsDispatchActionError, setRegisterDataDispatchAction, setRegisterDataDispatchActionSuccess, deletePhoneDispatchActionSuccess, deletePhoneDispatchActionError } from './dispatchers';
+import { getInputDataDispatchActionSuccess, setLoginDataDispatchActionSuccess, setLoginDataDispatchActionError, getInputDataDispatchActionError, getPhonesDispatchActionSuccess, getPhonesDispatchActionError, getPhoneDetailsDispatchActionSuccess, getPhoneDetailsDispatchActionError, setRegisterDataDispatchAction, setRegisterDataDispatchActionSuccess, deletePhoneDispatchActionSuccess, deletePhoneDispatchActionError, editPhoneDispatchActionSuccess, editPhoneDispatchActionError, addPhoneDispatchActionSuccess, addPhoneDispatchActionError } from './dispatchers';
 import { DataResponse } from '../../api/types/app';
 import customData from '../../api/json/InputFields.json'
-import { URL_LOGIN, URL_GET_PHONES, URL_GET_PHONE_DETAILS, URL_REGISTER, URL_REMOVE_PHONE } from '../../utils/constants';
+import { URL_LOGIN, URL_GET_PHONES, URL_GET_PHONE_DETAILS, URL_REGISTER, URL_REMOVE_PHONE, URL_EDIT_PHONE, URL_ADD_PHONE } from '../../utils/constants';
 
 /** Initial Saga **/
 export function* appSaga() {
@@ -15,6 +15,8 @@ export function* appSaga() {
     takeLatest(AppActionTypes.GET_PHONE_DETAILS, getPhoneDetails),
     takeLatest(AppActionTypes.SET_REGISTER_DATA, getRegisterData),
     takeLatest(AppActionTypes.DELETE_PHONE, getDeletePhone),
+    takeLatest(AppActionTypes.EDIT_PHONE, getEditPhone),
+    takeLatest(AppActionTypes.ADD_NEW_PHONE, getAddNewPhone),
   ])
 }
 
@@ -32,7 +34,6 @@ function* getInputData(action: IGetInputDataAction) {
 }
 
 function* getLoginData(action: ISetLoginDataAction) {
-
   const data = Object.keys(action.data).reduce((acc, key) => {
     acc[key.toLowerCase()] = action.data[key]
     return acc
@@ -43,7 +44,8 @@ function* getLoginData(action: ISetLoginDataAction) {
       () => fetch(URL_LOGIN, {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Allow-Control-Allow-Methods': 'POST',
           },
           body: JSON.stringify(data)
       })
@@ -66,7 +68,9 @@ function* getPhones(action: IGetPhonesAction) {
       () => fetch(URL_GET_PHONES, {
         method: 'GET',
         headers: {
-          'auth-token': action.token
+          'auth-token': action.token,
+          'Application-Type': 'application/json',
+          'Access-Control-Allow-Methods': 'GET',
         },
       })
         .then(response => response.json())
@@ -87,7 +91,9 @@ function* getPhoneDetails(action: IGetPhoneDetailsAction) {
       () => fetch(`${URL_GET_PHONE_DETAILS}/${action.id}`, {
         method: 'GET',
         headers: {
-          'auth-token': action.token
+          'auth-token': action.token,
+          'Application-Type': 'application/json',
+          'Access-Control-Allow-Methods': 'GET',
         },
       })
         .then(response => response.json())
@@ -113,7 +119,8 @@ function* getRegisterData(action: ISetRegisterDataAction) {
       () => fetch(URL_REGISTER, {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Methods': 'POST',
           },
           body: JSON.stringify(data)
       })
@@ -136,7 +143,9 @@ function* getDeletePhone(action: IDeletePhoneAction) {
       () => fetch(`${URL_REMOVE_PHONE}/${action.id}`, {
         method: 'DELETE',
         headers: {
-          'auth-token': action.token
+          'auth-token': action.token,
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Methods': 'DELETE'
         },
       })
         .then(response => response.json())
@@ -149,5 +158,60 @@ function* getDeletePhone(action: IDeletePhoneAction) {
   } catch (error: any) {
     console.log('Delete Phone Error: ', error)
     yield put<AppActions>(deletePhoneDispatchActionError(error))
+  }
+}
+
+function* getEditPhone(action: IEditPhoneAction) {
+  console.log('action', action)
+  try {
+    let responseData: DataResponse.EditResults = yield call(
+      () => fetch(`${URL_EDIT_PHONE}/${action.id}`, {
+        method: 'PATCH',
+        headers: {
+          'auth-token': action.token,
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Methods': 'PATCH'
+        },
+        body: JSON.stringify(action.data)
+      })
+        .then(response => response.json())
+        .then(result => responseData = result)
+        .catch(error => console.log('error', error))
+    )
+
+    yield put<AppActions>(editPhoneDispatchActionSuccess(responseData))
+    yield put<AppActions>(getPhoneDetailsDispatchActionSuccess(responseData))
+
+  } catch (error: any) {
+    console.log('Edit Phone Error: ', error)
+    yield put<AppActions>(editPhoneDispatchActionError(error))
+  }
+}
+
+function* getAddNewPhone(action: IAddNewPhoneAction) {
+  console.log('action', action)
+  try {
+    let responseData: DataResponse.AddNewPhoneResult = yield call(
+      () => fetch(URL_ADD_PHONE, {
+        method: 'POST',
+        headers: {
+          'auth-token': action.token,
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Methods': 'POST'
+        },
+        body: JSON.stringify(action.data)
+      })
+        .then(response => response.json())
+        .then(result => responseData = result)
+        .catch(error => console.log('error', error))
+    )
+
+    console.log('responseData', responseData)
+
+    yield put<AppActions>(addPhoneDispatchActionSuccess(responseData))
+
+  } catch (error: any) {
+    console.log('Add New Phone Error: ', error)
+    yield put<AppActions>(addPhoneDispatchActionError(error))
   }
 }
