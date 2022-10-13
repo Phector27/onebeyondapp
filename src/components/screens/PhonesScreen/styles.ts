@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native"
-import { BLACK, WHITE, FONT_SIZE_L, PRIMARY, FONT_SIZE_S, FONT_SIZE_SM } from '../../../utils/constants';
+import { BLACK, WHITE, FONT_SIZE_L, PRIMARY, FONT_SIZE_S, FONT_SIZE_SM, FONT_SIZE_XXL } from '../../../utils/constants';
 
 export const styles = StyleSheet.create({
   container: {
@@ -19,5 +19,15 @@ export const styles = StyleSheet.create({
   logOutText: {
     color: BLACK,
     fontSize: FONT_SIZE_SM,
+  },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  emptyText: {
+    color: WHITE,
+    fontSize: FONT_SIZE_XXL,
+    textAlign: 'center'
   },
 })

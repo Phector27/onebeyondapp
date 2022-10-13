@@ -10,6 +10,7 @@ import { IHomeScreen } from './Interfaces/index';
 import { storeData } from "../../../utils/AsyncStorage"
 import { setTokenDispatchAction, cleanResponseDispatchAction, setIsAdminUserDispatchAction } from '../../../store/app/dispatchers';
 import { WELCOME_ACCESS } from '../../../utils/constants';
+import RNRestart from 'react-native-restart';
 
 const HomeScreen: React.FunctionComponent<IHomeScreen> = ({ navigation }) => {
   const [isKeyboardVisible, setKeyboardVisible] = useState<boolean>(false)
@@ -32,11 +33,16 @@ const HomeScreen: React.FunctionComponent<IHomeScreen> = ({ navigation }) => {
   const registerResponse = useSelector<DefaultState, DataResponse.RegisterResults>(state => state.app.registerData!)
   
   const handleLogin = () => {
-    navigation.navigate('PhonesScreen', { token: loginResponse?.data.token })
+    Platform.OS === 'android' && navigation.navigate('PhonesScreen', { token: loginResponse?.data.token })
     storeData('token', loginResponse?.data.token)
     storeData('isAdmin', `${loginResponse?.isAdmin}`)
     dispatch(setIsAdminUserDispatchAction(loginResponse?.isAdmin))
     dispatch(setTokenDispatchAction(loginResponse?.data.token))
+    if (Platform.OS === 'ios') {
+      setTimeout(() => {
+        RNRestart.Restart()
+      }, 500);
+    }
   }
 
   useEffect(() => {

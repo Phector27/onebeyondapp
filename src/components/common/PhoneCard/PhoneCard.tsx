@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, TouchableOpacity, Image } from 'react-native'
 import { DataResponse } from '../../../api/types/app';
-import { WHITE } from '../../../utils/constants';
+import { WHITE, BLACK } from '../../../utils/constants';
 
 interface IPhoneCard {
   item: DataResponse.PhoneResults
@@ -21,7 +21,7 @@ const PhoneCard: React.FunctionComponent<IPhoneCard> = ({ item, navigation }) =>
       resizeMode="contain"
     />
     <View style={{ flex: 1, flexDirection: 'column', marginLeft: 10 }}>
-      <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{item.name}</Text>
+      <Text style={{ fontSize: 20, fontWeight: 'bold', color: BLACK }}>{item.name}</Text>
         <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
           <Text style={{fontWeight: 'bold'}}>Color: </Text>
           <Text>{item.color}</Text>
@@ -34,7 +34,7 @@ const PhoneCard: React.FunctionComponent<IPhoneCard> = ({ item, navigation }) =>
           <Text style={{fontWeight: 'bold'}}>Processor: </Text>
           <Text>{item.processor}</Text>
         </View>
-      <Text style={{alignSelf: 'flex-end', marginTop: 20}}>Press for more info</Text>
+      <Text style={{alignSelf: 'flex-end', marginTop: 10}}>Press for more info</Text>
     </View>
   </TouchableOpacity>
   )

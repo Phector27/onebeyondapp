@@ -136,6 +136,11 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
+    dexOptions {
+        incremental true
+        javaMaxHeapSize "4g"
+    }
+
     defaultConfig {
         applicationId "com.onebeyondapp"
         minSdkVersion rootProject.ext.minSdkVersion

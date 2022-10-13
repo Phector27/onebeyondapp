@@ -9,14 +9,14 @@ export enum UButtonType {
   SECONDARY = 'button-secondary',
 }
 
-interface iUButton extends TouchableOpacityProps {
+interface IUButton extends TouchableOpacityProps {
   onPress?: () => void
   text: string
   type?: UButtonType
   isLoading?: boolean
 }
 
-const UButton: React.FunctionComponent<iUButton> = ({ onPress, text, type = UButtonType.DEFAULT, isLoading, ...rest }) => {
+const UButton: React.FunctionComponent<IUButton> = ({ onPress, text, type = UButtonType.DEFAULT, isLoading, ...rest }) => {
   const style = rest.style
 
   return (

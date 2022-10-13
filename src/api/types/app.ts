@@ -28,9 +28,9 @@ export namespace DataResponse {
   }
 
   export interface PhoneResults {
-    active: boolean
+    active?: boolean
     _id: string
-    id: number
+    id?: number
     name: string
     manufacturer: string
     description: string
@@ -40,7 +40,37 @@ export namespace DataResponse {
     screen: string
     processor: string
     ram: number
-    createdAt: string
+    createdAt?: string
+    message?: string | undefined
+  }
+
+  export interface AddNewPhoneResult {
+    id: number;
+    name: string;
+    manufacturer: string;
+    description: string;
+    color: string;
+    price: number;
+    imageFileName: string;
+    screen: string;
+    processor: string;
+    ram: number;
+    active: boolean;
+    _id: string;
+    createdAt: string;
+    __v: number;
+  }
+
+  export interface AddPhoneRequest {
+    id: number;
+    name: string;
+    manufacturer: string;
+    description: string;
+    color: string;
+    price: number;
+    screen: string;
+    processor: string;
+    ram: number;
   }
 
   export interface RegisterResults {
@@ -60,5 +90,20 @@ export namespace DataResponse {
   export interface DeletePhoneResults {
     message: string
     id: string
+  }
+
+  export interface EditResults {
+    active: boolean
+    _id: string
+    id: number
+    name: string
+    manufacturer: string
+    description: string
+    color: string
+    price: number
+    imageFileName: string
+    screen: string
+    processor: string
+    ram: number
   }
 }
