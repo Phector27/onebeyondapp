@@ -11,7 +11,7 @@ import TextInput from "../TextInput/TextInput";
 import UButton from "../Buttons/Buttons";
 import { useDispatch } from "react-redux";
 import { addPhoneDispatchAction } from "../../../store/app/dispatchers";
-import { RED } from "../../../utils/constants";
+import { RED, isIpad } from '../../../utils/constants';
 import { UButtonType } from "../Buttons/Buttons";
 
 interface IAddNewPhoneForm {
@@ -94,14 +94,14 @@ const AddNewPhoneForm: React.FunctionComponent<IAddNewPhoneForm> = ({
           onPress={handleClose}
           style={{
             alignSelf: "flex-start",
-            width: "30%",
-            transform: [{ scale: 0.75 }],
+            width: isIpad ? "20%" : "30%",
+            transform: [{ scale: isIpad ? 1.25 : 0.75 }],
             marginTop: 60,
-            left: 20,
+            left: isIpad ? 50 : 20,
           }}
           text="Go back"
         />
-        <Text style={{ color: "white", fontSize: 20, marginTop: 10 }}>
+        <Text style={{ color: "white", fontSize: isIpad ? 35 : 20, marginTop: 10 }}>
           Add new phone:
         </Text>
 
@@ -112,7 +112,8 @@ const AddNewPhoneForm: React.FunctionComponent<IAddNewPhoneForm> = ({
           placeholder="Internal ID -> different from MongoDB _id"
           label="Internal control ID"
           style={{
-            transform: [{ scale: 0.9 }],
+            transform: [{ scale: isIpad ? 1.25 : 0.9 }],
+            width: isIpad ? "50%" : "85%",
           }}
         />
         <TextInput
@@ -124,8 +125,9 @@ const AddNewPhoneForm: React.FunctionComponent<IAddNewPhoneForm> = ({
             validateDataType(text, "string") ? setPhone({ ...phone, name: text }) : setPhone({ ...phone, name: "N/A" })
           }}
           style={{
-            transform: [{ scale: 0.9 }],
-            marginTop: -5,
+            transform: [{ scale: isIpad ? 1.25 : 0.9 }],
+            marginTop: isIpad ? 15 : -5,
+            width: isIpad ? "50%" : "85%",
           }}
         />
         <TextInput
@@ -137,8 +139,9 @@ const AddNewPhoneForm: React.FunctionComponent<IAddNewPhoneForm> = ({
             validateDataType(text, "string") ? setPhone({ ...phone, manufacturer: text }) : setPhone({ ...phone, manufacturer: "N/A" })
           }}
           style={{
-            transform: [{ scale: 0.9 }],
-            marginTop: -5,
+            transform: [{ scale: isIpad ? 1.25 : 0.9 }],
+            marginTop: isIpad ? 15 : -5,
+            width: isIpad ? "50%" : "85%",
           }}
         />
         <TextInput
@@ -151,8 +154,9 @@ const AddNewPhoneForm: React.FunctionComponent<IAddNewPhoneForm> = ({
             validateDataType(text, "string") ? setPhone({ ...phone, description: text }) : setPhone({ ...phone, description: "N/A" })
           }}
           style={{
-            transform: [{ scale: 0.9 }],
-            marginTop: -5,
+            transform: [{ scale: isIpad ? 1.25 : 0.9 }],
+            marginTop: isIpad ? 20 : -5,
+            width: isIpad ? "50%" : "85%",
           }}
         />
         <TextInput
@@ -164,8 +168,9 @@ const AddNewPhoneForm: React.FunctionComponent<IAddNewPhoneForm> = ({
             validateDataType(text, "string") ? setPhone({ ...phone, color: text }) : setPhone({ ...phone, color: "N/A" })
           }}
           style={{
-            transform: [{ scale: 0.9 }],
-            marginTop: -5,
+            transform: [{ scale: isIpad ? 1.25 : 0.9 }],
+            marginTop: isIpad ? 20 : -5,
+            width: isIpad ? "50%" : "85%",
           }}
         />
         <TextInput
@@ -178,8 +183,9 @@ const AddNewPhoneForm: React.FunctionComponent<IAddNewPhoneForm> = ({
             validateDataType(text, "number") ? setPhone({ ...phone, price: Number(text) }) : setPhone({ ...phone, price: 0 })
           }}
           style={{
-            transform: [{ scale: 0.9 }],
-            marginTop: -5,
+            transform: [{ scale: isIpad ? 1.25 : 0.9 }],
+            marginTop: isIpad ? 15 : -5,
+            width: isIpad ? "50%" : "85%",
           }}
         />
         <TextInput
@@ -191,8 +197,9 @@ const AddNewPhoneForm: React.FunctionComponent<IAddNewPhoneForm> = ({
             validateDataType(text, "string") ? setPhone({ ...phone, screen: text }) : setPhone({ ...phone, screen: "N/A" })
           }}
           style={{
-            transform: [{ scale: 0.9 }],
-            marginTop: -5,
+            transform: [{ scale: isIpad ? 1.25 : 0.9 }],
+            marginTop: isIpad ? 15 : -5,
+            width: isIpad ? "50%" : "85%",
           }}
         />
         <TextInput
@@ -204,8 +211,9 @@ const AddNewPhoneForm: React.FunctionComponent<IAddNewPhoneForm> = ({
             validateDataType(text, "string") ? setPhone({ ...phone, processor: text }) : setPhone({ ...phone, processor: "N/A" })
           }}
           style={{
-            transform: [{ scale: 0.9 }],
-            marginTop: -5,
+            transform: [{ scale: isIpad ? 1.25 : 0.9 }],
+            marginTop: isIpad ? 15 : -5,
+            width: isIpad ? "50%" : "85%",
           }}
         />
         <TextInput
@@ -218,17 +226,18 @@ const AddNewPhoneForm: React.FunctionComponent<IAddNewPhoneForm> = ({
             validateDataType(text, "number") ? setPhone({ ...phone, ram: Number(text) }) : setPhone({ ...phone, ram: 0 })
           }}
           style={{
-            transform: [{ scale: 0.9 }],
-            marginTop: -5,
+            transform: [{ scale: isIpad ? 1.25 : 0.9 }],
+            marginTop: isIpad ? 15 : -5,
+            width: isIpad ? "50%" : "85%",
           }}
         />
 
         {showButton() ? (
-          <UButton text="Add new phone" onPress={handleAddPhone} />
+          <UButton text="Add new phone" onPress={handleAddPhone} style={{marginTop: isIpad ? 20 : 5}} />
         ) : (
             <Text style={{
               color: RED,
-              fontSize: 14,
+              fontSize: isIpad ? 25 : 14,
               marginTop: 10,
               paddingBottom: 25,
               textAlign: "center",

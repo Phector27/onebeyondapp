@@ -14,16 +14,17 @@ interface IUButton extends TouchableOpacityProps {
   text: string
   type?: UButtonType
   isLoading?: boolean
+  noOpacity?: boolean
 }
 
-const UButton: React.FunctionComponent<IUButton> = ({ onPress, text, type = UButtonType.DEFAULT, isLoading, ...rest }) => {
+const UButton: React.FunctionComponent<IUButton> = ({ onPress, text, type = UButtonType.DEFAULT, isLoading, noOpacity, ...rest }) => {
   const style = rest.style
 
   return (
     <TouchableOpacity
       style={[styles().container, style]}
       onPress={onPress}
-      activeOpacity={0.2}>
+      activeOpacity={noOpacity ? 0 : 0.2}>
       <View
         style={styles(type, PRIMARY).buttonContainer}>
         {isLoading

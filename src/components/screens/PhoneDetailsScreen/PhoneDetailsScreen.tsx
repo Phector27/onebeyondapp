@@ -6,7 +6,7 @@ import { getPhoneDetailsDispatchAction, clearPhoneDetailsDispatchAction, editPho
 import { DefaultState } from '../../../store'
 import { DataResponse } from '../../../api/types/app'
 import Loader from '../../common/Loader/Loader'
-import { WHITE, RED, GREY } from '../../../utils/constants';
+import { WHITE, RED, GREY, isIpad } from '../../../utils/constants';
 import { getData } from '../../../utils/AsyncStorage';
 import AdminOptions from '../../common/AdminOptions/AdminOptions';
 import UButton from '../../common/Buttons/Buttons';
@@ -112,8 +112,8 @@ const PhoneDetailsScreen: React.FunctionComponent<IPhoneDetailsScreen> = ({ navi
       {isAdmin && <AdminOptions navigation={navigation} handleEdit={handleEdit} isEditing={isEditing} /> }
       <Image
         style={{
-        width: 300,
-        height: 300,
+        width: isIpad ? 500 : 300,
+        height: isIpad ? 500 : 300,
         alignSelf: 'center'
       }}
         source={{ uri: phoneDetails.imageFileName }}
@@ -121,25 +121,25 @@ const PhoneDetailsScreen: React.FunctionComponent<IPhoneDetailsScreen> = ({ navi
       />
       {!isEditing ? (
         <>
-          <Text style={{ fontSize: 25, fontWeight: 'bold', alignSelf: 'center', color: WHITE, marginTop: 25 }}>{phoneDetails.name}</Text>
-          <Text style={{ fontSize: 16, fontWeight: 'bold', width: '87.5%', alignSelf: 'center', color: WHITE, marginTop: 25, textAlign: 'justify' }}>{phoneDetails.description}</Text>
-          <View>
-            <Text style={{ fontSize: 20, fontWeight: 'bold', color: WHITE, marginTop: 25, marginLeft: 25 }}>Specs</Text>
+          <Text style={{ fontSize: isIpad ? 40 : 25, fontWeight: 'bold', alignSelf: 'center', color: WHITE, marginTop: 25 }}>{phoneDetails.name}</Text>
+          <Text style={{ fontSize: isIpad ? 25 : 16, fontWeight: 'bold', width: '87.5%', alignSelf: 'center', color: WHITE, marginTop: 25, textAlign: 'justify' }}>{phoneDetails.description}</Text>
+          <View style={{width: isIpad ? '92.5%' : '100%', alignSelf: 'center'}}>
+            <Text style={{ fontSize:  isIpad ? 30 : 20, fontWeight: 'bold', color: WHITE, marginTop: 25, marginLeft: 25 }}>Specs</Text>
             <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5, marginLeft: 25 }}>
-              <Text style={{ fontWeight: 'bold', color: WHITE }}>Color: </Text>
-              <Text style={{ color: WHITE }}>{phoneDetails.color}</Text>
+              <Text style={{ fontWeight: 'bold', color: WHITE, fontSize: isIpad ? 20 : 14 }}>Color: </Text>
+              <Text style={{ color: WHITE, fontSize: isIpad ? 20 : 14  }}>{phoneDetails.color}</Text>
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 2.5, marginLeft: 25 }}>
-              <Text style={{ fontWeight: 'bold', color: WHITE }}>Processor: </Text>
-              <Text style={{ color: WHITE }}>{phoneDetails.processor}</Text>
+              <Text style={{ fontWeight: 'bold', color: WHITE, fontSize: isIpad ? 20 : 14  }}>Processor: </Text>
+              <Text style={{ color: WHITE, fontSize: isIpad ? 20 : 14  }}>{phoneDetails.processor}</Text>
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 25 }}>
-              <Text style={{ fontWeight: 'bold', color: WHITE }}>RAM: </Text>
-              <Text style={{ color: WHITE }}>{phoneDetails.ram}</Text>
+              <Text style={{ fontWeight: 'bold', color: WHITE, fontSize: isIpad ? 20 : 14  }}>RAM: </Text>
+              <Text style={{ color: WHITE, fontSize: isIpad ? 20 : 14  }}>{phoneDetails.ram}GB</Text>
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 2.5, marginLeft: 25 }}>
-              <Text style={{ fontWeight: 'bold', color: WHITE }}>Price: </Text>
-              <Text style={{ color: WHITE }}>{phoneDetails.price}$</Text>
+              <Text style={{ fontWeight: 'bold', color: WHITE, fontSize: isIpad ? 20 : 14  }}>Price: </Text>
+              <Text style={{ color: WHITE, fontSize: isIpad ? 20 : 14  }}>{phoneDetails.price}$</Text>
             </View>
           </View>
         </>

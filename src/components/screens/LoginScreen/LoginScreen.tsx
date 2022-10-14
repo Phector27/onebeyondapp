@@ -9,7 +9,7 @@ import { styles } from "./styles"
 import { IHomeScreen } from './Interfaces/index';
 import { storeData } from "../../../utils/AsyncStorage"
 import { setTokenDispatchAction, cleanResponseDispatchAction, setIsAdminUserDispatchAction } from '../../../store/app/dispatchers';
-import { WELCOME_ACCESS } from '../../../utils/constants';
+import { WELCOME_ACCESS, URL_LOGO } from '../../../utils/constants';
 import RNRestart from 'react-native-restart';
 
 const HomeScreen: React.FunctionComponent<IHomeScreen> = ({ navigation }) => {
@@ -105,7 +105,7 @@ const HomeScreen: React.FunctionComponent<IHomeScreen> = ({ navigation }) => {
           :
           <View style={styles(isKeyboardVisible).container}>
             <Image
-              source={require("../../../assets/images/logo.png")}
+              source={{uri: URL_LOGO}}
               style={styles().logo}
               resizeMode="contain"
             />
