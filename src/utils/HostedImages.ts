@@ -1,3 +1,1 @@
-export const homeImage: string = 'https://res.cloudinary.com/phector27/image/upload/v1653477317/cv-webuild/Pngtree_vector_house_icon_4013530_e7szio.png'
-export const favImage: string = 'https://res.cloudinary.com/phector27/image/upload/v1655298813/send-email-icon-png-png-image-732639_yqzfe2.png'
 export const logo: string = 'https://res.cloudinary.com/phector27/image/upload/v1665056706/logo_h4ttza.png'

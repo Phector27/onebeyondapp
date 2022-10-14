@@ -62,7 +62,7 @@ export namespace DataResponse {
   }
 
   export interface AddPhoneRequest {
-    id: number;
+    id: number | string;
     name: string;
     manufacturer: string;
     description: string;
@@ -93,15 +93,15 @@ export namespace DataResponse {
   }
 
   export interface EditResults {
-    active: boolean
-    _id: string
+    active?: boolean
+    _id?: string
     id: number
     name: string
     manufacturer: string
     description: string
     color: string
     price: number
-    imageFileName: string
+    imageFileName?: string
     screen: string
     processor: string
     ram: number

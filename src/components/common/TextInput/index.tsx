@@ -1,21 +1,13 @@
 import React, { useState } from 'react'
-import { StyleProp, TextInputProps, ViewStyle } from 'react-native'
 import { Input, Icon } from 'react-native-elements'
 import { styles } from './styles'
-import { PRIMARY, GREY } from '../../../utils/constants';
+import { iTextInput } from './interfaces'
+import { PRIMARY, GREY } from '../../../utils/constants'
 
 export enum TextInputType {
   TEXT,
   PASSWORD,
   PICK
-}
-
-interface iTextInput extends TextInputProps {
-  label: string
-  length: number
-  type?: TextInputType
-  onPress?: () => void
-  style?: StyleProp<ViewStyle>
 }
 
 const TextInput: React.FunctionComponent<iTextInput> = ({ type, length, label, style, onPress, ...rest }) => {

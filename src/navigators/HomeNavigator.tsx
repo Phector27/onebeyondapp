@@ -1,9 +1,9 @@
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import LoginScreen from '../components/screens/LoginScreen/LoginScreen'
-import PhonesScreen from '../components/screens/PhonesScreen/PhonesScreen'
-import PhoneDetailsScreen from '../components/screens/PhoneDetailsScreen/PhoneDetailsScreen'
-import { BLACK } from '../utils/constants';
+import LoginScreen from '../components/screens/LoginScreen'
+import PhonesScreen from '../components/screens/PhonesScreen'
+import PhoneDetailsScreen from '../components/screens/PhoneDetailsScreen'
+import { BLACK } from '../utils/constants'
 
 const HomeNavigator = () => {
   const Stack = createNativeStackNavigator()

@@ -4,6 +4,9 @@ import { BLACK, isIpad } from '../../../../utils/constants';
 const { height } = Dimensions.get('screen')
 
 export const styles = (isKeyboardVisible?: boolean) => StyleSheet.create({
+  keyboardAvoid: {
+    flex: 1
+  },
   container: {
     flex: 1,
     paddingTop: '20%',
