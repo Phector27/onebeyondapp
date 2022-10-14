@@ -65,7 +65,7 @@ const PhonesScreen: React.FunctionComponent<IPhonesScreen> = ({ navigation }) =>
       setIsEmpty(true)
       setTimeout(() => {
         setLoading(false)
-      }, 1000) // force to show loader to get a better UX when the list is empty
+      }, 3000) // force to show loader to get a better UX when the list is empty
     }
   }, [phonesList])
 
