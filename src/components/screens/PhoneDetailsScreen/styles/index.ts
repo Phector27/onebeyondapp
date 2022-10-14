@@ -3,7 +3,7 @@ import { isIpad, WHITE, GREY } from '../../../../utils/constants';
 
 export default StyleSheet.create({
   container: {
-    marginTop: 75
+    marginTop: 75,
   },
   image: {
     alignSelf: 'center',
@@ -47,6 +47,7 @@ export default StyleSheet.create({
     fontSize: isIpad ? 20 : 14,
   },
   processorAndPriceContainer: {
+    marginLeft: 25,
     marginVertical: 2.5,
     alignItems: 'center',
     flexDirection: 'row',

@@ -161,7 +161,7 @@ const PhoneDetailsScreen: React.FunctionComponent<IPhoneDetailsScreen | any> = (
               <Text style={styles.specTitle}>{RAM}: </Text>
               <Text style={styles.specText}>{phoneDetails.ram}GB</Text>
             </View>
-            <View style={styles.processorAndPriceContainer}>
+            <View style={[styles.processorAndPriceContainer, { paddingBottom: 50 }]}>
               <Text style={styles.specTitle}>{PRICE}: </Text>
               <Text style={styles.specText}>{phoneDetails.price}$</Text>
             </View>
