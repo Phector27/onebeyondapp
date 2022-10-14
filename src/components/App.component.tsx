@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react'
-import { StatusBar } from 'react-native'
-import { useDispatch } from 'react-redux'
-import { NavigationContainer } from '@react-navigation/native'
-import HomeNavigator from '../navigators/HomeNavigator'
-import LoginNavigator from '../navigators/LoginNavigator'
-import { setTokenDispatchAction, setIsAdminUserDispatchAction } from '../store/app/dispatchers';
-import { getData } from '../utils/AsyncStorage'
+import React, { useState, useEffect } from "react"
+import { StatusBar } from "react-native"
+import { useDispatch } from "react-redux"
+import { NavigationContainer } from "@react-navigation/native"
+import { getData } from "../utils/AsyncStorage"
+import HomeNavigator from "../navigators/HomeNavigator"
+import LoginNavigator from "../navigators/LoginNavigator"
+import { setTokenDispatchAction } from "../store/app/dispatchers"
 
 const App = () => {
   const [loading, setLoading] = useState<boolean>(true)
@@ -18,7 +18,7 @@ const App = () => {
   }, [])
 
   const obtainToken = async () => {
-    const token = await getData('token')
+    const token = await getData("token")
     if (token) {
       dispatch(setTokenDispatchAction(token))
       setIsLogged(true)
@@ -30,7 +30,11 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      <StatusBar translucent backgroundColor="transparent" barStyle={'light-content'} />
+      <StatusBar
+        translucent
+        backgroundColor="transparent"
+        barStyle={"light-content"}
+      />
       {loading
         ? null
         : isLogged

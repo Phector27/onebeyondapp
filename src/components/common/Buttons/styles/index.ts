@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native'
-import { UButtonType } from './Buttons'
-import { WHITE, BLACK, GREY, FONT_SIZE_M, FONT_SIZE_SM, FONT_SIZE_L, FONT_SIZE_XXL } from '../../../utils/constants';
+import { UButtonType } from '..'
+import { WHITE, BLACK, GREY, FONT_SIZE_SM, FONT_SIZE_L } from '../../../../utils/constants'
 
 export const styles = (type?: UButtonType, buttonColor?: string) => StyleSheet.create({
   container: {

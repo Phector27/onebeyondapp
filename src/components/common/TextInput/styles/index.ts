@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import { WHITE, FONT_SIZE_M, GREY, FONT_SIZE_S } from '../../../utils/constants';
+import { WHITE, FONT_SIZE_M, GREY, FONT_SIZE_S } from '../../../../utils/constants'
 
 export const styles = (length?: number) => StyleSheet.create({
   inputContainerStyle: {

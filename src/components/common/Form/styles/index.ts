@@ -25,5 +25,8 @@ export const styles = StyleSheet.create({
     color: BLACK,
     fontWeight: '600',
     fontSize: FONT_SIZE_L,
+  },
+  logInBtn: {
+    marginVertical: "5%"
   }
 })

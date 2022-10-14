@@ -1,24 +1,25 @@
 import React, { useEffect, useState } from "react"
-import { Alert, Linking, Platform, View } from 'react-native'
+import { Alert, Linking, View } from "react-native"
 import { useDispatch, useSelector } from "react-redux"
-import { getInputDataDispatchAction, setLoginDataDispatchAction, setRegisterDataDispatchAction } from '../../../store/app/dispatchers';
-import { DefaultState } from "../../../store/index"
-import { DataResponse } from '../../../api/types/app'
-import { URL } from "../../../utils/constants"
-import { IFormData, INavigation } from "./Interfaces"
-import Loader from "../Loader/Loader"
-import UButton, { UButtonType } from "../Buttons/Buttons"
-import TextInput, { TextInputType } from "../TextInput/TextInput"
 import { styles } from "./styles"
+import Loader from "../Loader"
+import UButton, { UButtonType } from "../Buttons"
+import TextInput, { TextInputType } from "../TextInput"
+import { IForm, IFormData } from './Interfaces'
+import { URL, LOG_IN, REGISTER, FORGOT, SIGN_UP } from '../../../utils/constants'
+import {
+  getInputDataDispatchAction,
+  setLoginDataDispatchAction,
+  setRegisterDataDispatchAction,
+} from "../../../store/app/dispatchers"
+import { DefaultState } from "../../../store"
+import { DataResponse } from "../../../api/types/app"
 
-interface IForm {
-  handleLoadingSubmit: () => void
-  isLoginLoading: boolean
-  navigation: INavigation
-  onHandleRegister: () => void
-}
-
-const Form: React.FunctionComponent<IForm> = ({ handleLoadingSubmit, isLoginLoading, navigation, onHandleRegister }) => {
+const Form: React.FunctionComponent<IForm> = ({
+  handleLoadingSubmit,
+  isLoginLoading,
+  onHandleRegister,
+}) => {
   const [isLogin, setIsLogin] = useState<boolean>(true)
   const [userData, setUserData] = useState<IFormData | any>(undefined)
 
@@ -50,8 +51,14 @@ const Form: React.FunctionComponent<IForm> = ({ handleLoadingSubmit, isLoginLoad
         value={userData ? userData[input.label] : ""}
         length={userData ? userData[input.label]?.length : 0}
         keyboardType={input.type === "text" ? "email-address" : "default"}
-        onChangeText={(text) => handleTextChange(text.toLowerCase().trim(), input.label)}
-        type={input.type === "password" ? TextInputType.PASSWORD : TextInputType.TEXT}
+        onChangeText={(text) =>
+          handleTextChange(text.toLowerCase().trim(), input.label)
+        }
+        type={
+          input.type === "password"
+            ? TextInputType.PASSWORD
+            : TextInputType.TEXT
+        }
       />
     )
   })
@@ -74,47 +81,50 @@ const Form: React.FunctionComponent<IForm> = ({ handleLoadingSubmit, isLoginLoad
     setIsLogin(false)
   }
 
-  return inputData.length ?
+  return inputData.length ? (
     <View style={styles.container}>
-      {!isLogin &&
+      {!isLogin && (
         <TextInput
           label="Name"
-          length={userData ? userData['Name']?.length : 0}
-          onChangeText={(text) => handleTextChange(text, "Name")}
-          value={userData ? userData['Name'] : ""}
           placeholder="Name"
           style={styles.inputContainer}
+          value={userData ? userData["Name"] : ""}
+          length={userData ? userData["Name"]?.length : 0}
+          onChangeText={(text) => handleTextChange(text, "Name")}
         />
-      }
+      )}
       {getTextInputs}
       <UButton
-        text={isLogin ? "Log In" : "Register"}
         onPress={handleSubmitForm}
         style={styles.buttonStyle}
         isLoading={isLoginLoading}
+        text={isLogin ? LOG_IN : REGISTER}
       />
-      {isLogin ?
+      {isLogin ? (
         <>
           <UButton
-            text="Forgot your password?"
-            onPress={() => Linking.openURL(URL)}
+            text={FORGOT}
             type={UButtonType.CLEAR}
+            onPress={() => Linking.openURL(URL)}
           />
           <UButton
-            text="Sign Up 💛"
+            text={`${SIGN_UP} 💛`}
             onPress={handleRegister}
             type={UButtonType.CLEAR}
           />
-        </>  
-        :
-        <UButton text="Log In 🔑"
-          onPress={() => setIsLogin(true)}
+        </>
+      ) : (
+        <UButton
+          text={`${LOG_IN} 🔑`}
+          style={styles.logInBtn}
           type={UButtonType.CLEAR}
-          style={{marginVertical: '5%'}}
+          onPress={() => setIsLogin(true)}
         />
-      }
+      )}
     </View>
-    : <Loader />
+  ) : (
+    <Loader />
+  )
 }
 
 export default Form
