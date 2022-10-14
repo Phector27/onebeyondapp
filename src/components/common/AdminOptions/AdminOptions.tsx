@@ -3,7 +3,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { DefaultState } from '../../../store'
 import { DataResponse } from '../../../api/types/app'
-import { WHITE, RED, PRIMARY, BLACK } from '../../../utils/constants';
+import { WHITE, RED, PRIMARY, BLACK, isIpad } from '../../../utils/constants';
 import { deletePhoneDispatchAction } from '../../../store/app/dispatchers';
 
 interface IAdminOptions {
@@ -71,15 +71,15 @@ const AdminOptions: React.FunctionComponent<IAdminOptions> = ({ navigation, hand
     <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 20, marginBottom: 20 }}>
       <TouchableOpacity
         onPress={() => handleEdit(!isEditing)}
-        style={{ backgroundColor: isEditing ? PRIMARY : WHITE, padding: 10, margin: 10, borderRadius: 10, width: '40%' }}
+        style={{ backgroundColor: isEditing ? PRIMARY : WHITE, padding: isIpad ? 30 : 10, margin: 10, borderRadius: 10, width:  '40%' }}
       >
-        <Text style={{ textAlign: 'center', color: BLACK, fontWeight: 'bold' }}>{isEditing ? 'Editing now' : 'Edit phone'}</Text>
+        <Text style={{ textAlign: 'center', color: BLACK, fontWeight: 'bold', fontSize: isIpad ? 30 : 14 }}>{isEditing ? 'Editing now' : 'Edit phone'}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={openPrompt}
-          style={{ backgroundColor: RED, padding: 10, margin: 10, borderRadius: 10, width: '40%' }}
+          style={{ backgroundColor: RED, padding:  isIpad ? 30 : 10, margin: 10, borderRadius: 10, width: '40%' }}
         >
-          <Text style={{ textAlign: 'center', color: BLACK, fontWeight: 'bold' }}>Delete Phone</Text>
+          <Text style={{ textAlign: 'center', color: BLACK, fontWeight: 'bold', fontSize: isIpad ? 30 : 14 }}>Delete Phone</Text>
       </TouchableOpacity>
     </View>
   )

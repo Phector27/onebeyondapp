@@ -1,4 +1,7 @@
 {
   "name": "OneBeyondApp",
-  "displayName": "OneBeyondApp"
+  "displayName": "OneBeyondApp",
+  "ios": {
+    "supportsTablet": true
+  }
 }

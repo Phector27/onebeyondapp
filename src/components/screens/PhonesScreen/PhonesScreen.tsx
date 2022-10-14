@@ -32,6 +32,7 @@ import {
 import UButton, { UButtonType } from "../../common/Buttons/Buttons";
 import { transform } from "@babel/core";
 import AddNewPhoneForm from "../../common/AddNewPhoneForm/AddNewPhoneForm";
+import { isIpad, BLACK } from '../../../utils/constants';
 
 const PhonesScreen: React.FunctionComponent<IPhonesScreen> = ({
   navigation,
@@ -118,8 +119,10 @@ const PhonesScreen: React.FunctionComponent<IPhonesScreen> = ({
           style={{
             flexDirection: "row",
             alignItems: "center",
-            justifyContent: "space-between",
+            justifyContent: isIpad ? "space-around" : "space-between",
             marginBottom: 15,
+            width: isIpad ? "130%" : "100%",
+            alignSelf: "center",
           }}
         >
           <UButton
@@ -128,8 +131,8 @@ const PhonesScreen: React.FunctionComponent<IPhonesScreen> = ({
             onPress={() => handleAddNewPhone(true)}
             style={{
               alignSelf: "flex-start",
-              width: "35%",
-              transform: [{ scale: 0.75 }],
+              width: isIpad ? "15%" : "35%",
+              transform: [{ scale: isIpad ? 1.25 : 0.75 }],
               display: isAdmin ? "flex" : "none",
             }}
           />
@@ -138,31 +141,31 @@ const PhonesScreen: React.FunctionComponent<IPhonesScreen> = ({
             onPress={handleLogOut}
             style={{
               alignSelf: "flex-end",
-              width: "25%",
-              transform: [{ scale: 0.75 }],
+              width: isIpad ? "15%" : "25%",
+              transform: [{ scale: isIpad ? 1.25 : 0.75 }],
             }}
           />
         </View>
           <UButton
-            type={UButtonType.CLEAR}
+            noOpacity
             text="+"
             onPress={() => handleAddNewPhone(true)}
             style={{
             position: "absolute",
-            bottom: 20,
-            right: 20,
+            bottom: isIpad ? 40 : 20,
+            right: isIpad ? 40 : 20,
             width: 40,
             height: 40,
             borderRadius: 20,
-            backgroundColor: GREY,
+            backgroundColor: PRIMARY,
             justifyContent: "center",
             alignItems: "center",
             display: isAdmin ? "flex" : "none",
             zIndex: 1000,
-            transform: [{ scale: 1.5 }],
+            transform: [{ scale: isIpad ? 2.5 : 1.5,  }],
           }}
         />
-        <Text style={{ color: GREY, textAlign: "center" }}>{PULL_DOWN}</Text>
+        <Text style={{ color: GREY, textAlign: "center", fontSize: isIpad ? 25 : 14 }}>{PULL_DOWN}</Text>
         {refreshing && (
           <Text
             style={{
@@ -170,6 +173,7 @@ const PhonesScreen: React.FunctionComponent<IPhonesScreen> = ({
               textAlign: "center",
               opacity: 0.8,
               marginVertical: 10,
+              fontSize: isIpad ? 20 : 14
             }}
           >
             {PULLED}

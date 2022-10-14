@@ -1,5 +1,7 @@
-import { StyleSheet, Platform } from "react-native"
-import { BLACK } from '../../../../utils/constants'
+import { StyleSheet, Platform, Dimensions } from "react-native"
+import { BLACK, isIpad } from '../../../../utils/constants';
+
+const { height } = Dimensions.get('screen')
 
 export const styles = (isKeyboardVisible?: boolean) => StyleSheet.create({
   container: {
@@ -8,10 +10,13 @@ export const styles = (isKeyboardVisible?: boolean) => StyleSheet.create({
     paddingHorizontal: '5%',
     justifyContent: 'center',
     backgroundColor: BLACK,
+    transform: [{ scale: isIpad ? 1.5 : 1}]
   },
   logo: {
     width: '100%',
-    marginBottom: '2%',
+    height: 100,
+    marginBottom: height * 0.1,
     backgroundColor: BLACK,
+    marginTop: 40
   }
 })

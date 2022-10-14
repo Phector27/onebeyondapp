@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Alert, Linking, View } from 'react-native'
+import { Alert, Linking, Platform, View } from 'react-native'
 import { useDispatch, useSelector } from "react-redux"
 import { getInputDataDispatchAction, setLoginDataDispatchAction, setRegisterDataDispatchAction } from '../../../store/app/dispatchers';
 import { DefaultState } from "../../../store/index"
@@ -40,6 +40,7 @@ const Form: React.FunctionComponent<IForm> = ({ handleLoadingSubmit, isLoginLoad
   const getTextInputs = inputData.map((input) => {
     return (
       <TextInput
+        style={styles.inputContainer}
         key={input.id}
         label={input.label}
         autoCapitalize="none"
@@ -82,6 +83,7 @@ const Form: React.FunctionComponent<IForm> = ({ handleLoadingSubmit, isLoginLoad
           onChangeText={(text) => handleTextChange(text, "Name")}
           value={userData ? userData['Name'] : ""}
           placeholder="Name"
+          style={styles.inputContainer}
         />
       }
       {getTextInputs}
